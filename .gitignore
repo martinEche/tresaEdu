@@ -1,0 +1,15 @@
+/API/vendor/
+/API/.env
+/tresaedu/node_modules/
+/tresaedu/build/
+*.zip
+/API/adjuntos/
+/API/uploads/
+/API/foto_perfil/
+/API/materialcursos/
+API/firebase_service_account.json
+API/convertirDocumento.php
+API/generar_cuestionario.php
+API/test_conectividad_IA.php
+API/generar_plan_clase.php
+API/generate-plan.php

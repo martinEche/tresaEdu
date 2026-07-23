@@ -1,0 +1,9 @@
+{
+    "require": {
+        "google/apiclient": "*",
+        "firebase/php-jwt": "^7.0"
+    },
+    "config": {
+        "platform-check": false
+    }
+}
