@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 
 import PerfilLogo from "../usuarios/PerfilLogo";
 import MensajeAdjuntos from "./MensajeAdjuntos";
+import { RenderTexto } from "./RenderTexto";
 
 const URL_REACCIONES = `${CONFIG.API_URL}/operarReacciones.php`;
 
@@ -145,11 +146,7 @@ function MensajesGrupoBurbuja({mensaje, eliminarMensaje, userId, configuracion})
                 :
                 <>
                     <div className="texto-chat">
-                        {mensaje.mensaje
-                            .replace(/\\r\\n/g, '\n')
-                            .replace(/\\n/g, '\n')
-                            .replace(/\\r/g, '')
-                        }
+                        <RenderTexto texto={mensaje.mensaje} />
                     </div>
                     {mensaje.adjunto === "Si" && (
                         <MensajeAdjuntos mensaje_id={mensaje.id_mensaje} onPlayGlobal={handlePlayGlobal} />

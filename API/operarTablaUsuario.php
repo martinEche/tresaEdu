@@ -399,11 +399,13 @@ switch($method){
                 $nueva_consulta->execute();
                 if($nueva_consulta1 = $conexion->prepare("DELETE FROM rol where id_usuario='$id' ")){
                     $nueva_consulta1->execute();
+                    $conexion->query("DELETE FROM curso_estudiante WHERE id_usuario='$id'");
+                    $conexion->query("DELETE FROM curso_equipo_docente WHERE id_usuario='$id'");
+                    $conexion->query("DELETE FROM usuario_perfil WHERE id_usuario='$id'");
                     $respuesta = ['success','Usuario eliminado'];
                 }else{
                     $respuesta = ['error','fallo la eliminación de los roles del usuario'];
                 }
-               
             }else{
                 $respuesta = ['error','fallo la eliminación'];
             }

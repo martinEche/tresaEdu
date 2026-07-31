@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchConfiguracion } from './servicios/configuracionService.js';
 
 //login Petit
-import CajaLogin from './componentes/CajaLogin2';
+ import CajaLogin from './componentes/CajaLogin2';
 
 //Login Tresatec Demo
 //import CajaLogin from './componentes/CajaLogin';

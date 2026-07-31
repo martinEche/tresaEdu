@@ -35,7 +35,7 @@ if ($method === 'POST') {
         }
         if (isset($dataObject->seccion) && $dataObject->seccion !== '') {
             $seccion = $conexion->real_escape_string($dataObject->seccion);
-            $filters .= " AND cg.seccion = '$seccion' ";
+            $filters .= " AND (CASE WHEN cg.seccion = cg.denominacion THEN cg.seccion WHEN cg.denominacion IS NULL OR cg.denominacion = '' THEN cg.seccion ELSE cg.denominacion END) = '$seccion' ";
         }
 
         if (isset($dataObject->espacio) && $dataObject->espacio !== '' && $dataObject->espacio !== 'general') {
@@ -48,7 +48,7 @@ if ($method === 'POST') {
                         co.año AS ciclo,
                         f.nombre_formacion AS nivel,
                         e.orden,
-                        cg.seccion AS division,
+                        (CASE WHEN cg.seccion = cg.denominacion THEN cg.seccion WHEN cg.denominacion IS NULL OR cg.denominacion = '' THEN cg.seccion ELSE cg.denominacion END) AS division,
                         e.nombre_espacio,
                         u.id AS estudiante_id,
                         u.documento,
@@ -65,7 +65,7 @@ if ($method === 'POST') {
                     JOIN rol r ON u.id = r.id_usuario
                     WHERE r.rol = 7
                     $filters
-                    ORDER BY co.año DESC, f.nombre_formacion ASC, e.orden ASC, cg.seccion ASC, u.apellido ASC, u.nombre ASC";
+                    ORDER BY co.año DESC, f.nombre_formacion ASC, e.orden ASC, division ASC, u.apellido ASC, u.nombre ASC";
 
             if ($consulta = $conexion->prepare($sql)) {
                 $consulta->execute();
@@ -84,7 +84,7 @@ if ($method === 'POST') {
                         co.año AS ciclo,
                         f.nombre_formacion AS nivel,
                         e.orden,
-                        cg.seccion AS division,
+                        (CASE WHEN cg.seccion = cg.denominacion THEN cg.seccion WHEN cg.denominacion IS NULL OR cg.denominacion = '' THEN cg.seccion ELSE cg.denominacion END) AS division,
                         COUNT(DISTINCT u.id) as total_estudiantes
                     FROM curso_estudiante ce
                     JOIN usuarios u ON ce.id_usuario = u.id
@@ -96,8 +96,8 @@ if ($method === 'POST') {
                     JOIN rol r ON u.id = r.id_usuario
                     WHERE r.rol = 7
                     $filters
-                    GROUP BY co.año, f.nombre_formacion, e.orden, cg.seccion
-                    ORDER BY co.año DESC, f.nombre_formacion ASC, e.orden ASC, cg.seccion ASC";
+                    GROUP BY co.año, f.nombre_formacion, e.orden, (CASE WHEN cg.seccion = cg.denominacion THEN cg.seccion WHEN cg.denominacion IS NULL OR cg.denominacion = '' THEN cg.seccion ELSE cg.denominacion END)
+                    ORDER BY co.año DESC, f.nombre_formacion ASC, e.orden ASC, division ASC";
 
             if ($consulta = $conexion->prepare($sql)) {
                 $consulta->execute();
@@ -118,7 +118,7 @@ if ($method === 'POST') {
                         f.id AS nivel_id,
                         f.nombre_formacion AS nivel_nombre,
                         e.orden,
-                        cg.seccion AS division,
+                        (CASE WHEN cg.seccion = cg.denominacion THEN cg.seccion WHEN cg.denominacion IS NULL OR cg.denominacion = '' THEN cg.seccion ELSE cg.denominacion END) AS division,
                         e.id AS espacio_id,
                         e.nombre_espacio
                     FROM curso_grupo cg
@@ -127,7 +127,7 @@ if ($method === 'POST') {
                     JOIN cohorte co ON c.id_cohorte = co.id
                     JOIN formacion f ON co.id_formacion = f.id
                     WHERE cg.seccion IS NOT NULL AND cg.seccion != ''
-                    ORDER BY co.año DESC, f.nombre_formacion ASC, e.orden ASC, cg.seccion ASC";
+                    ORDER BY co.año DESC, f.nombre_formacion ASC, e.orden ASC, division ASC";
             
             $resF = $conexion->query($sqlF);
             $combinaciones = [];

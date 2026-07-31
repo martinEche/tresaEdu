@@ -149,7 +149,7 @@ function Sidebar({ acceder, rol, rolSelect, configuracion }) {
                                                 </OverlayTrigger>
                                             </li>
                                         )}                                        
-                                        {rol == 4 && (
+                                        {rol == 4 && rol == 1 &&  (
                                             <li>
                                                 <OverlayTrigger
                                                     placement="right"
@@ -304,7 +304,7 @@ function Sidebar({ acceder, rol, rolSelect, configuracion }) {
                                         </Link>
                                     </OverlayTrigger>
                                 </li>
-                                {rol == 3 && (
+                                {rol <=3 && (
                                     <li>
                                         <OverlayTrigger
                                             placement="right"

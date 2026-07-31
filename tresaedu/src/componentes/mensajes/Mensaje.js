@@ -14,6 +14,7 @@ import PerfilLogo from '../usuarios/PerfilLogo.js';
 import { useFirebaseCounter } from '../../hooks/useFirebaseCounter';
 import MensajesEliminados from './MensajesEliminados.js';
 import MensajesGrupo from './MensajesGrupo.js';
+import { RenderTexto } from './RenderTexto.js';
 
 const URL_LISTAR_MENSAJES = `${CONFIG.API_URL}/listarMensajes.php`;
 const URL_MENSAJES = `${CONFIG.API_URL}/operarMensajes.php`;
@@ -310,7 +311,7 @@ function Mensaje({acceder, rol, configuracion}){
                         </div>
                     </div>
                     
-                    <p className='pt-2 mensaje-original'>{mensaje.mensaje}</p>
+                    <p className='pt-2 mensaje-original'><RenderTexto texto={mensaje.mensaje} /></p>
                     <hr />
                     <div className='text-center'>
                     { mensaje.adjunto =='Si' ? <><MensajeAdjuntos mensaje_id={mensaje.id_mensaje} /> </>: '' }
@@ -334,7 +335,7 @@ function Mensaje({acceder, rol, configuracion}){
                                         <div className='mensaje-para'><strong>Para:</strong>{mr.para}</div>
                                     </div>
                                 </div>
-                                <p className='mensaje-respuesta'>{mr.mensaje}</p>
+                                <p className='mensaje-respuesta'><RenderTexto texto={mr.mensaje} /></p>
                             </div>
                         )}
                     </div>
