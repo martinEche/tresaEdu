@@ -16,6 +16,10 @@ workflows:
         working_dir: app/pushapp/push_demo
         script: |
           flutter packages pub get
+      - name: Generate App Icons
+        working_dir: app/pushapp/push_demo
+        script: |
+          dart run flutter_launcher_icons
       - name: Install Pods
         working_dir: app/pushapp/push_demo
         script: |
