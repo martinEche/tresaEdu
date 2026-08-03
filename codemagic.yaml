@@ -23,7 +23,7 @@ workflows:
       - name: Build IPA
         working_dir: app/pushapp/push_demo
         script: |
-          flutter build ipa --release --build-number=$BUILD_NUMBER
+          flutter build ipa --release
     artifacts:
       - app/pushapp/push_demo/build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
