@@ -3,26 +3,27 @@ workflows:
     name: iOS Release Workflow
     max_build_duration: 120
     instance_type: mac_mini_m1
-    working_dir: app/pushapp/push_demo
     environment:
       flutter: stable
       xcode: latest
       cocoapods: default
     scripts:
       - name: Set up code signing settings on Xcode project
+        working_dir: app/pushapp/push_demo
         script: |
           xcode-project use-profiles
       - name: Get Flutter packages
+        working_dir: app/pushapp/push_demo
         script: |
-          cd $CM_BUILD_DIR/app/pushapp/push_demo
           flutter packages pub get
       - name: Install Pods
+        working_dir: app/pushapp/push_demo
         script: |
           find . -name "Podfile" -execdir pod install \;
       - name: Build IPA
+        working_dir: app/pushapp/push_demo
         script: |
-          cd $CM_BUILD_DIR/app/pushapp/push_demo
           flutter build ipa --release --build-number=$BUILD_NUMBER
     artifacts:
-      - build/ios/ipa/*.ipa
+      - app/pushapp/push_demo/build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
