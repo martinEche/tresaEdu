@@ -63,11 +63,20 @@ function enviarPushFirebase($token, $title, $body, $dataPayload = null) {
             ]
         ],
         'apns' => [
+            'headers' => [
+                'apns-priority' => '10',
+                'apns-push-type' => 'alert',
+            ],
             'payload' => [
                 'aps' => [
+                    'alert' => [
+                        'title' => $title,
+                        'body'  => $body,
+                    ],
                     'sound' => 'default',
                     'badge' => 1,
-                    'mutable-content' => 1
+                    'content-available' => 1,
+                    'mutable-content' => 1,
                 ]
             ]
         ]
@@ -96,6 +105,13 @@ function enviarPushFirebase($token, $title, $body, $dataPayload = null) {
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     $curlError = curl_error($ch);
     curl_close($ch);
+
+    // Registro de diagnóstico para rastreo de envíos Push
+    @file_put_contents(
+        __DIR__ . '/debug_push.log',
+        date('Y-m-d H:i:s') . " | HTTP: $httpCode | Token: " . substr($token, 0, 20) . "... | Resp: " . ($response ?: $curlError) . "\n",
+        FILE_APPEND
+    );
 
     if ($response === false) {
         return ['error' => 'Error de red conectando a FCM', 'details' => $curlError];

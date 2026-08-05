@@ -146,7 +146,7 @@ if (!empty($recipient_usernames)) {
                     if ($uname !== $usuario_remitente) {
                         if (!empty($email) || !empty($email2)) {
                             require_once __DIR__ . '/enviar_email.php';
-                            $asuntoEmail = "Nuevo mensaje en la plataforma: " . $asunto;
+                            $asuntoEmail = "Nuevo mensaje en la plataforma: de".htmlspecialchars($nombre_remitente) .". " . $asunto;
                             $cuerpo = "Hola " . htmlspecialchars($nombre_dest) . ",<br><br>Has recibido un nuevo mensaje de <strong>" . htmlspecialchars($nombre_remitente) . "</strong> en la plataforma educativa.<br><br><strong>Asunto:</strong> " . htmlspecialchars($asunto) . "<br><strong>Mensaje:</strong><br>" . nl2br(htmlspecialchars(strip_tags($mensaje)));
                             
                             $webviewUrl = obtenerFrontendUrlDinamico() . "/Mensajes";
